@@ -3,6 +3,7 @@
  */
 
 #include "wx/wx.h" 
+#include "wx/textfile.h"
 
 class MyApp: public wxApp
 {
@@ -13,10 +14,12 @@ class MyFrame: public wxFrame
 {
 private:
 	wxTextCtrl *piEdit;
+	wxString piStr;
 public:
 
     MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
 
+	void validate(wxString str);
     void OnQuit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 	void onSubmit(wxCommandEvent& event);
@@ -69,6 +72,10 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	
     new wxButton(panel, ID_BUTTON, wxT("Ok"), wxPoint(40, 80));
     
+    wxTextFile* file = new wxTextFile(_("pi.dat"));
+    file->Open();
+    piStr = file->GetFirstLine();
+    std::cout<<file->GetLineCount();
     
     SetMenuBar( menuBar );
 
@@ -91,6 +98,24 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 void
 MyFrame::onSubmit(wxCommandEvent& WXUNUSED(event))
 {
-	wxMessageBox( piEdit->GetValue(), _("Validation"),
+	validate(piEdit->GetValue());
+}
+
+void
+MyFrame::validate(wxString s)
+{
+	unsigned i;
+	wxString* message = new wxString(_("Correct"));
+	
+	for (i = 0; i < s.Len(); i++)
+	{
+		if (piStr[i] != s[i])
+		{
+			message->Printf(_("Error at: %d"), i);
+			break;
+		}
+	}
+	
+	wxMessageBox( *message, _("Validation"),
                   wxOK | wxICON_INFORMATION, this);
 }
