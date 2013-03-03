@@ -4,6 +4,7 @@
 
 #include "wx/wx.h" 
 #include "wx/textfile.h"
+#include <algorithm>
 
 class MyApp: public wxApp
 {
@@ -75,7 +76,6 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
     wxTextFile* file = new wxTextFile(_("pi.dat"));
     file->Open();
     piStr = file->GetFirstLine();
-    std::cout<<file->GetLineCount();
     
     SetMenuBar( menuBar );
 
@@ -104,14 +104,18 @@ MyFrame::onSubmit(wxCommandEvent& WXUNUSED(event))
 void
 MyFrame::validate(wxString s)
 {
-	unsigned i;
+	int i;
+	wxString* a = new wxString(_("testtesttest"));
+	wxString* b = new wxString(a->Mid(1,2));
 	wxString* message = new wxString(_("Correct"));
 	
 	for (i = 0; i < s.Len(); i++)
 	{
 		if (piStr[i] != s[i])
 		{
-			message->Printf(_("Error at: %d"), i);
+			message->Printf(_("Error at: %d\nContext: ...%s\nCorrect: ...%s"),
+					i, s.Mid(std::max(i-3, 0), 4).wc_str(),
+					piStr.Mid(std::max(i-3, 0), 4).wc_str());
 			break;
 		}
 	}
