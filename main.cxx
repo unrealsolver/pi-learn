@@ -47,8 +47,8 @@ IMPLEMENT_APP(MyApp)
 
 bool MyApp::OnInit()
 {
-    MyFrame *frame = new MyFrame( _("Hello World"), wxPoint(50, 50),
-                                  wxSize(450,340) );
+    MyFrame *frame = new MyFrame( _("Know your Pi"), wxPoint(50, 50),
+                                  wxSize(250,130) );
     frame->Show(true);
     SetTopWindow(frame);
     return true;
@@ -68,19 +68,16 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
     menuBar->Append( menuFile, _("&File") );
 	
 	piEdit = new wxTextCtrl(panel, ID_SUBMIT, wxT(""), 
-			wxPoint(40, 40), wxSize(120,30), wxTE_PROCESS_ENTER);
+			wxPoint(20, 20), wxSize(200,30), wxTE_PROCESS_ENTER);
 	piEdit->SetValue(_("3"));
 	
-    new wxButton(panel, ID_BUTTON, wxT("Ok"), wxPoint(40, 80));
+    new wxButton(panel, ID_BUTTON, wxT("Ok"), wxPoint(20, 55));
     
     wxTextFile* file = new wxTextFile(_("pi.dat"));
     file->Open();
     piStr = file->GetFirstLine();
     
     SetMenuBar( menuBar );
-
-    CreateStatusBar();
-    SetStatusText( _("Welcome to wxWidgets!") );
 }
 
 void MyFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
@@ -90,8 +87,8 @@ void MyFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageBox( _("This is a wxWidgets Hello world sample"),
-                  _("About Hello World"),
+    wxMessageBox( _("This program will help you to remember the Pi number!"),
+                  _("About program"),
                   wxOK | wxICON_INFORMATION, this);
 }
 
@@ -111,7 +108,7 @@ MyFrame::validate(wxString s)
 	
 	for (i = 0; i < s.Len(); i++)
 	{
-		if (piStr[i] != s[i])
+		if (piStr.GetChar(i) != s.GetChar(i))
 		{
 			message->Printf(_("Error at: %d\nContext: ...%s\nCorrect: ...%s"),
 					i, s.Mid(std::max(i-3, 0), 4).wc_str(),
