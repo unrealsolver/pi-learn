@@ -69,7 +69,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	
 	piEdit = new wxTextCtrl(panel, ID_SUBMIT, wxT(""), 
 			wxPoint(20, 20), wxSize(200,30), wxTE_PROCESS_ENTER);
-	piEdit->SetValue(_("3"));
+	piEdit->SetValue(_("3."));
 	
     new wxButton(panel, ID_BUTTON, wxT("Ok"), wxPoint(20, 55));
     
