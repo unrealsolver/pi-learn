@@ -48,7 +48,7 @@ IMPLEMENT_APP(MyApp)
 bool MyApp::OnInit()
 {
     MyFrame *frame = new MyFrame( _("Know your Pi"), wxPoint(50, 50),
-                                  wxSize(250,130) );
+                                  wxSize(290,200) );
     frame->Show(true);
     SetTopWindow(frame);
     return true;
@@ -68,10 +68,10 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
     menuBar->Append( menuFile, _("&File") );
 	
 	piEdit = new wxTextCtrl(panel, ID_SUBMIT, wxT(""), 
-			wxPoint(20, 20), wxSize(200,30), wxTE_PROCESS_ENTER);
+			wxPoint(20, 20), wxSize(250,100), wxTE_PROCESS_ENTER | wxTE_MULTILINE);
 	piEdit->SetValue(_("3."));
 	
-    new wxButton(panel, ID_BUTTON, wxT("Ok"), wxPoint(20, 55));
+    new wxButton(panel, ID_BUTTON, wxT("Ok"), wxPoint(20, 125));
     
     wxTextFile* file = new wxTextFile(_("pi.dat"));
     file->Open();
